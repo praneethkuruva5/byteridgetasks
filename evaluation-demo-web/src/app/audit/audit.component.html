@@ -1,0 +1,43 @@
+<h1>Hi {{currentUser.firstName}}!</h1>
+<p>You're logged in with Angular 8!!</p>
+<h3>All login audit :</h3>
+<div class="d-flex">
+    
+    <div class="dropdown">
+        <label>Time Format:</label>
+        <button class="btn btn-primary p-1 dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{selectedTimeFormat}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+          <button class="dropdown-item" type="button" (click)="changeFormat(12)">12hrs format</button>
+          <button class="dropdown-item" type="button" (click)="changeFormat(24)">24hrs format</button>
+        </div>
+      </div>
+      <div class="pl-3">
+          <label for="search">Search</label>
+          <input id="search" (keyup)="changed($event.target.value)" placeholder="id or user">
+      </div>
+</div>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id<i class="fab fa-accessible-icon"></i></th> 
+        <th scope="col">user</th>
+        <th scope="col">loginTime<span class="float-right" (click)="loginsort()" style="cursor:pointer">sort</span></th>
+        <th scope="col">logoutTime<span class="float-right" (click)="logoutsort()" style="cursor:pointer">sort</span></th>
+        <th scope="col">ip</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let audit of auditsCopy| paginate: { itemsPerPage: 5, currentPage: p }">
+        <td>{{audit._id}}</td>
+        <td>{{audit.user}}</td>
+        <td>{{audit.loginTime|date:pipePerameter}}</td>
+        <td>{{audit.logoutTime|date:pipePerameter}}</td>
+        <td>{{audit.ip}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-end">
+  <pagination-controls (pageChange)="p = $event" class="d-inline"  autoHide="true"></pagination-controls>
+</div>
